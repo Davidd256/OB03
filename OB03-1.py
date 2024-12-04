@@ -9,25 +9,29 @@ class Animal:
         raise NotImplementedError("Subclasses must implement this method")
 
     def eat(self):
-        return f"{self.name} is eating."
+        return f"Животное {self.name} ест."
 
 
 # Подкласс Bird
 class Bird(Animal):
     def make_sound(self):
-        return f"{self.name} says chirp."
+        return f"Птица {self.name} чирикает."
 
 
 # Подкласс Mammal
 class Mammal(Animal):
     def make_sound(self):
-        return f"{self.name} says roar."
+        return f"Млекопитающее {self.name} рычит."
 
+# Подкласс Mammal
+class Dogs(Mammal):
+    def make_sound(self):
+        return f"Млекопитающее собака {self.name} лает, воет."
 
 # Подкласс Reptile
 class Reptile(Animal):
     def make_sound(self):
-        return f"{self.name} says hiss."
+        return f"Рептилия {self.name} шипит."
 
 
 # Функция для демонстрации полиморфизма
@@ -59,7 +63,7 @@ class ZooKeeper:
         self.name = name
 
     def feed_animal(self, animal):
-        return f"{self.name} is feeding {animal.name}."
+        return f"{self.name} Кормит и ухаживает за {animal.name}."
 
 
 class Veterinarian:
@@ -67,7 +71,7 @@ class Veterinarian:
         self.name = name
 
     def heal_animal(self, animal):
-        return f"{self.name} is healing {animal.name}."
+        return f"{self.name} лечит {animal.name}."
 
 
 # Пример использования
@@ -76,15 +80,17 @@ if __name__ == "__main__":
     parrot = Bird("Polly", 2)
     lion = Mammal("Leo", 5)
     snake = Reptile("Sly", 3)
+    dog = Dogs("Шарик", 8)
 
     # Демонстрация полиморфизма
-    animal_sound([parrot, lion, snake])
+    animal_sound([parrot, lion, snake, dog])
 
     # Создаем зоопарк
     zoo = Zoo()
     zoo.add_animal(parrot)
     zoo.add_animal(lion)
     zoo.add_animal(snake)
+    zoo.add_animal(dog)
 
     # Показываем животных в зоопарке
     print("\nAnimals in the zoo:")
