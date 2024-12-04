@@ -1,3 +1,7 @@
+#Обновленная версия программы на Python с функциями для сохранения и загрузки информации о зоопарке в файл с использованием модуля `pickle`:
+
+
+import pickle
 
 # Базовый класс Animal
 class Animal:
@@ -23,10 +27,12 @@ class Mammal(Animal):
     def make_sound(self):
         return f"Млекопитающее {self.name} рычит."
 
-# Подкласс Mammal
+
+# Подкласс Dogs
 class Dogs(Mammal):
     def make_sound(self):
         return f"Млекопитающее собака {self.name} лает, воет."
+
 
 # Подкласс Reptile
 class Reptile(Animal):
@@ -56,6 +62,15 @@ class Zoo:
         for animal in self.animals:
             print(f"{animal.name}, Age: {animal.age}")
 
+    def save_to_file(self, filename):
+        with open(filename, 'wb') as file:
+            pickle.dump(self, file)
+
+    @staticmethod
+    def load_from_file(filename):
+        with open(filename, 'rb') as file:
+            return pickle.load(file)
+
 
 # Класс для сотрудников зоопарка
 class ZooKeeper:
@@ -63,7 +78,7 @@ class ZooKeeper:
         self.name = name
 
     def feed_animal(self, animal):
-        return f"{self.name} Кормит и ухаживает за {animal.name}."
+        return f"{self.name} кормит и ухаживает за {animal.name}."
 
 
 class Veterinarian:
@@ -82,9 +97,6 @@ if __name__ == "__main__":
     snake = Reptile("Sly", 3)
     dog = Dogs("Шарик", 8)
 
-    # Демонстрация полиморфизма
-    animal_sound([parrot, lion, snake, dog])
-
     # Создаем зоопарк
     zoo = Zoo()
     zoo.add_animal(parrot)
@@ -93,8 +105,18 @@ if __name__ == "__main__":
     zoo.add_animal(dog)
 
     # Показываем животных в зоопарке
-    print("\nAnimals in the zoo:")
+    print("Animals in the zoo:")
     zoo.show_animals()
+
+    # Сохраняем зоопарк в файл
+    zoo.save_to_file('zoo_data.pkl')
+
+    # Загружаем зоопарк из файла
+    loaded_zoo = Zoo.load_from_file('zoo_data.pkl')
+
+    # Показываем загруженных животных
+    print("\nLoaded animals from the zoo:")
+    loaded_zoo.show_animals()
 
     # Создаем сотрудников
     keeper = ZooKeeper("John")
@@ -103,6 +125,9 @@ if __name__ == "__main__":
     # Демонстрация работы сотрудников
     print(keeper.feed_animal(lion))
     print(vet.heal_animal(snake))
+#```
+
+#Этот код создает зоопарк с животными и позволяет сохранять и загружать его состояние из файла.
 # ```
 #
 # ### Объяснение:
@@ -111,7 +136,7 @@ if __name__ == "__main__":
 #
 # 2. **Подклассы**: `Bird`, `Mammal` и `Reptile` наследуют от `Animal` и переопределяют метод `make_sound()`.
 #
-# 3
+# 3. **Подклассы**: `Dogs` наследует от `Mammal` и переопределяют метод `make_sound()`.
 #
 
 # . **Полиморфизм**: Функция `animal_sound(animals)` принимает список животных и вызывает их метод `make_sound()`.
